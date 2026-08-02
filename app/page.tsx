@@ -47,14 +47,14 @@ export default function Home() {
           <Image 
             src="/webim.PNG" 
             alt="It's not relaxation it's Railaxation" 
-            fill
+            fill 
             priority
             sizes="(max-width: 768px) 100vw, 1200px"
             className="object-cover object-center brightness-[0.85]"
           />
 
           {/* Foreground elements container inside the center */}
-          <div className="relative z-10 w-full max-w-2xl px-3 sm:px-4 flex flex-col items-center pt-40 sm:pt-48 md:pt-56">
+          <div className="relative z-10 w-full max-w-2xl px-3 sm:px-4 flex flex-col items-center">
             
             {/* Search Bar Container */}
             <form onSubmit={handleSearchSubmit} className="w-full max-w-xl flex flex-col sm:flex-row bg-white rounded-full overflow-hidden shadow-lg border border-zinc-200 mb-4 sm:mb-6">
