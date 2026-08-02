@@ -17,44 +17,29 @@ export default function Home() {
     }
   };
 
-  // Your navigation bar links mapped to the exact clean targets
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Railaxation Shop", href: "/shop" },
-    { name: "About / Contact", href: "/about" },
-  ];
-
-  // Your three product collections with precise navigation routes
+  // Your three product collections with precise navigation routes and editable image placeholders
   const categories = [
-    { name: "Railaxation Candles & Melts", img: "/candles.PNG", href: "/shop?category=candles" },
-    { name: "Railaxation Soaps", img: "/rosesoap.PNG", href: "/shop?category=soaps" },
-    { name: "Railaxation Boxes", img: "/webim.PNG", href: "/shop?category=boxes" },
+    { 
+      name: "Railaxation Candles & Melts", 
+      img: "/bluecandle.PNG",
+      href: "/shop?category=candles" 
+    },
+    { 
+      name: "Railaxation Soaps", 
+      img: "/rosesoap.jpg",
+      href: "/shop?category=soaps" 
+    },
+    { 
+      name: "Railaxation Boxes", 
+      img: "/comingsoon.PNG",
+      href: "/shop?category=boxes" 
+    },
   ];
 
   return (
     <div className="min-h-screen bg-[#FBFBFA] text-[#0B2B1B] font-sans">
       
-      {/* 1. BRAND NAVIGATION HEADER */}
-      <header className="w-full py-6 px-8 flex justify-between items-center border-b border-zinc-200 bg-white">
-        <nav className="flex gap-6 text-sm tracking-wide font-medium">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.name} 
-              href={link.href} 
-              className="hover:text-[#D4AF37] transition-colors"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </nav>
-        
-        {/* Brand Logo Text */}
-        <span className="font-serif text-lg tracking-[0.2em] font-bold text-[#0B2B1B]">
-          RAILAXATION
-        </span>
-      </header>
-
-      {/* 2. MAIN CONTAINER */}
+      {/* MAIN CONTAINER */}
       <main className="max-w-7xl mx-auto px-6 py-12">
         
         {/* HERO SECTION WITH IMAGE AND FUNCTIONAL SEARCH BAR */}
@@ -88,7 +73,7 @@ export default function Home() {
               </button>
             </form>
 
-            {/* Slogan Text - Beneath search bar, and locked to one line */}
+            {/* Slogan Text */}
             <h1 className="text-white font-serif text-2xl md:text-4xl tracking-wide font-extrabold drop-shadow-md whitespace-nowrap">
               It's not relaxation, it's Railaxation
             </h1>
@@ -96,7 +81,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. THREE CATEGORIES GRID - LINKED DIRECTLY TO FILTERS */}
+        {/* THREE CATEGORIES GRID */}
         <section className="mt-16">
           <h2 className="text-center font-serif text-2xl tracking-wide mb-10">
             Browse Our Collections
@@ -124,7 +109,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. The Railaxation STORY */}
+        {/* THE RAILAXATION STORY */}
         <section className="mt-24 max-w-2xl mx-auto text-center border-t border-zinc-200 pt-16">
           <span className="text-xs uppercase tracking-[0.2em] text-[#D4AF37] block mb-2">
             The Story of Railaxation
