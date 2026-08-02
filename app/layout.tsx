@@ -28,13 +28,12 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FBFBFA] text-black">
+      <body className="min-h-full flex flex-col bg-[#FBFBFA] text-black overflow-x-hidden">
         <CartProvider>
           {/* AUTOMATED SCROLLING TICKER BANNER */}
-          <div className="bg-white border-b border-black py-2 overflow-hidden whitespace-nowrap text-xs font-bold uppercase tracking-widest text-black">
-            <div className="inline-block animate-marquee">
-              ✨ SPECIAL ARTISAN DISCOUNTS CURRENTLY ACTIVE ACROSS SELECTED CANDLES & SOAPS — SHOP HANDCRAFTED SELF-CARE TODAY &bull; 
-               ✨
+          <div className="bg-white border-b border-black py-2 overflow-hidden text-[10px] sm:text-xs font-bold uppercase tracking-widest text-black">
+            <div className="inline-block min-w-max animate-marquee px-2">
+              ✨ SPECIAL DISCOUNTS ACTIVE NOW ✨
             </div>
           </div>
 
@@ -55,6 +54,7 @@ function HeaderNavbar() {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -64,20 +64,70 @@ function HeaderNavbar() {
   ];
 
   useEffect(() => {
-    const customerAuth = localStorage.getItem("railaxation_user_auth");
-    const adminAuth = localStorage.getItem("railaxation_admin_auth");
+    const syncAuthState = () => {
+      const customerAuth = localStorage.getItem("railaxation_user_auth");
+      const adminAuth = localStorage.getItem("railaxation_admin_auth");
 
-    if (adminAuth) {
-      setIsLoggedIn(true);
-      setUserRole("admin");
-    } else if (customerAuth) {
-      setIsLoggedIn(true);
-      setUserRole("customer");
-    } else {
+      if (adminAuth) {
+        setIsLoggedIn(true);
+        setUserRole("admin");
+      } else if (customerAuth) {
+        setIsLoggedIn(true);
+        setUserRole("customer");
+      } else {
+        setIsLoggedIn(false);
+        setUserRole(null);
+      }
+    };
+
+    const clearAuthSession = () => {
+      localStorage.removeItem("railaxation_user_auth");
+      localStorage.removeItem("railaxation_user_email");
+      localStorage.removeItem("railaxation_user_name");
+      localStorage.removeItem("railaxation_admin_auth");
+      localStorage.removeItem("railaxation_admin_email");
+      localStorage.removeItem("railaxation_last_activity");
       setIsLoggedIn(false);
       setUserRole(null);
-    }
-  }, [pathname]);
+    };
+
+    const markActivity = () => {
+      localStorage.setItem("railaxation_last_activity", String(Date.now()));
+    };
+
+    const checkForIdleTimeout = () => {
+      const lastActivity = Number(localStorage.getItem("railaxation_last_activity") || "0");
+
+      if (!lastActivity) {
+        markActivity();
+        return;
+      }
+
+      if (Date.now() - lastActivity > INACTIVITY_TIMEOUT_MS) {
+        clearAuthSession();
+        if (pathname === "/admin" || pathname === "/account") {
+          router.push("/login");
+        }
+      }
+    };
+
+    syncAuthState();
+    markActivity();
+
+    const activityEvents = ["pointerdown", "keydown", "touchstart", "scroll", "mousemove"];
+    activityEvents.forEach((eventName) => {
+      window.addEventListener(eventName, markActivity, { passive: true });
+    });
+
+    const timeoutCheck = window.setInterval(checkForIdleTimeout, 30000);
+
+    return () => {
+      activityEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, markActivity);
+      });
+      window.clearInterval(timeoutCheck);
+    };
+  }, [pathname, router]);
 
   const handleLogout = () => {
     localStorage.removeItem("railaxation_user_auth");
@@ -85,6 +135,7 @@ function HeaderNavbar() {
     localStorage.removeItem("railaxation_user_name");
     localStorage.removeItem("railaxation_admin_auth");
     localStorage.removeItem("railaxation_admin_email");
+    localStorage.removeItem("railaxation_last_activity");
 
     setIsLoggedIn(false);
     setUserRole(null);

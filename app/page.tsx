@@ -40,41 +40,41 @@ export default function Home() {
     <div className="min-h-screen bg-[#FBFBFA] text-[#0B2B1B] font-sans">
       
       {/* MAIN CONTAINER */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         
         {/* HERO SECTION WITH IMAGE AND FUNCTIONAL SEARCH BAR */}
-        <section className="relative w-full h-[350px] md:h-[450px] rounded-xl overflow-hidden flex items-center justify-center shadow-md">
+        <section className="relative w-full h-[300px] sm:h-[360px] md:h-[450px] rounded-xl overflow-hidden flex items-center justify-center shadow-md">
           <Image 
             src="/webim.PNG" 
             alt="It's not relaxation it's Railaxation" 
             fill 
             priority
-            sizes="(max-w-7xl) 100vw, 1200px"
-            className="object-cover brightness-[0.85]" 
+            sizes="(max-width: 768px) 100vw, 1200px"
+            className="object-cover object-center brightness-[0.85]"
           />
 
           {/* Foreground elements container inside the center */}
-          <div className="relative z-10 w-full max-w-2xl px-4 flex flex-col items-center">
+          <div className="relative z-10 w-full max-w-2xl px-3 sm:px-4 flex flex-col items-center">
             
             {/* Search Bar Container */}
-            <form onSubmit={handleSearchSubmit} className="w-full max-w-xl flex bg-white rounded-full overflow-hidden shadow-lg border border-zinc-200 mb-6">
+            <form onSubmit={handleSearchSubmit} className="w-full max-w-xl flex flex-col sm:flex-row bg-white rounded-full overflow-hidden shadow-lg border border-zinc-200 mb-4 sm:mb-6">
               <input 
                 type="text" 
                 placeholder="Search our Railaxation creations..." 
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                className="w-full px-6 py-4 text-zinc-800 focus:outline-none text-sm"
+                className="w-full px-4 sm:px-6 py-3 sm:py-4 text-zinc-800 focus:outline-none text-xs sm:text-sm"
               />
               <button 
                 type="submit" 
-                className="bg-[#0B2B1B] text-white px-6 font-medium text-xs uppercase tracking-widest hover:bg-opacity-90 transition-all"
+                className="bg-[#0B2B1B] text-white px-4 sm:px-6 py-3 font-medium text-[10px] sm:text-xs uppercase tracking-widest hover:bg-opacity-90 transition-all"
               >
                 Search
               </button>
             </form>
 
             {/* Slogan Text */}
-            <h1 className="text-white font-serif text-2xl md:text-4xl tracking-wide font-extrabold drop-shadow-md whitespace-nowrap">
+            <h1 className="text-white font-serif text-lg sm:text-2xl md:text-4xl tracking-wide font-extrabold drop-shadow-md text-center px-2 max-w-full break-words">
               It's not relaxation, it's Railaxation
             </h1>
 

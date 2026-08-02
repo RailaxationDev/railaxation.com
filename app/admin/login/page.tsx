@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 // Define your authorized admin email addresses
 const ADMIN_EMAILS = [
   "railaxation@gmail.com", // Replace with your actual Railaxation email
-  "brumbeeziemusic@gmail.com",
   "ayrgabriel@outlook.com", // Replace with your personal email
 ];
 
