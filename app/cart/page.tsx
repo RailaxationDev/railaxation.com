@@ -124,7 +124,14 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-[#FBFBFA] text-[#0B2B1B] font-sans">
-      
+      <header className="w-full py-4 px-4 sm:px-6 lg:px-8 flex flex-col gap-3 border-b border-zinc-200 bg-white sm:flex-row sm:items-center sm:justify-between">
+        <nav className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-sm tracking-wide font-medium">
+          <Link href="/" className="hover:text-[#D4AF37] transition-colors">Home</Link>
+          <Link href="/shop" className="hover:text-[#D4AF37] transition-colors">Railaxation Shop</Link>
+          <Link href="/about" className="hover:text-[#D4AF37] transition-colors">About / Contact</Link>
+        </nav>
+        <span className="font-serif text-base sm:text-lg tracking-[0.2em] font-bold whitespace-nowrap">RAILAXATION</span>
+      </header>
 
       <main className="max-w-5xl mx-auto px-6 py-16">
         <h1 className="font-serif text-3xl tracking-wide mb-8">Your Basket</h1>
