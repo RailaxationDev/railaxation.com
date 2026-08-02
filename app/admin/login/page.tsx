@@ -13,6 +13,7 @@ const ADMIN_EMAILS = [
 export default function UnifiedLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -22,12 +23,13 @@ export default function UnifiedLogin() {
 
     // Check if the email belongs to an authorized admin
     if (ADMIN_EMAILS.includes(cleanEmail)) {
-      // In a real app, you would validate the password against a backend or auth provider here.
-      // For this frontend implementation, we check the admin password:
-      if (password === "Railaxation2026!") {
+      const savedCustomAdminPass = localStorage.getItem("railaxation_custom_admin_password");
+      const currentAdminPassword = savedCustomAdminPass || "Railaxation2026!";
+
+      if (password === currentAdminPassword) {
         localStorage.setItem("railaxation_admin_auth", "true");
         localStorage.setItem("railaxation_user_email", cleanEmail);
-        router.push("/admin"); // Route straight to admin dashboard
+        router.push("/admin");
         return;
       }
     }
@@ -71,20 +73,29 @@ export default function UnifiedLogin() {
 
           <div>
             <label className="block text-xs uppercase tracking-wider text-zinc-500 mb-1">Password</label>
-            <input
-              type="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-zinc-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2B1B] text-[#0B2B1B]"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 pr-20 border border-zinc-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2B1B] text-[#0B2B1B]"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold uppercase tracking-wide text-[#0B2B1B] hover:text-orange-500 transition-colors active:scale-95"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
         </div>
 
         <button
           type="submit"
-          className="w-full bg-[#0B2B1B] text-white py-3 rounded-full text-xs uppercase tracking-widest font-medium hover:bg-opacity-90 transition-all shadow-md"
+          className="w-full bg-[#0B2B1B] text-white py-3 rounded-full text-xs uppercase tracking-widest font-medium hover:bg-opacity-90 transition-all shadow-md active:scale-95"
         >
           Sign In
         </button>

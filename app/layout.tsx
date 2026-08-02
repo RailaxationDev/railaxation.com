@@ -92,8 +92,8 @@ function HeaderNavbar() {
   };
 
   return (
-    <header className="w-full py-6 px-8 flex justify-between items-center border-b border-black bg-white">
-      <nav className="flex gap-6 text-sm tracking-wide font-medium items-center text-black">
+    <header className="w-full py-4 px-4 sm:px-6 lg:px-8 flex flex-col gap-3 border-b border-black bg-white md:flex-row md:items-center md:justify-between">
+      <nav className="flex flex-wrap items-center gap-2 sm:gap-3 lg:gap-6 text-[11px] sm:text-sm tracking-wide font-medium text-black">
         {navLinks.map((link) => (
           <Link
             key={link.name}
@@ -111,24 +111,24 @@ function HeaderNavbar() {
         )}
       </nav>
 
-      <div className="flex items-center gap-6">
+      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between md:gap-4">
         {isLoggedIn ? (
           <button
             onClick={handleLogout}
-            className="text-xs uppercase tracking-widest font-bold bg-black text-white px-5 py-2.5 rounded-full hover:bg-zinc-800 transition-all shadow-sm"
+            className="text-[10px] sm:text-xs uppercase tracking-widest font-bold bg-black text-white px-3 py-2 sm:px-5 sm:py-2.5 rounded-full hover:bg-zinc-800 transition-all shadow-sm whitespace-nowrap"
           >
             Sign Out
           </button>
         ) : (
           <Link
             href="/login"
-            className="text-xs uppercase tracking-widest font-semibold text-black bg-white border border-black px-4 py-2 rounded-full hover:text-orange-500 hover:border-orange-500 transition-all"
+            className="text-[10px] sm:text-xs uppercase tracking-widest font-semibold text-black bg-white border border-black px-3 py-2 sm:px-4 sm:py-2 rounded-full hover:text-orange-500 hover:border-orange-500 transition-all whitespace-nowrap"
           >
             Sign In / Sign Up
           </Link>
         )}
         
-        <Link href="/" className="font-serif text-lg tracking-[0.2em] font-bold text-black">
+        <Link href="/" className="font-serif text-base sm:text-lg tracking-[0.2em] font-bold text-black whitespace-nowrap">
           RAILAXATION
         </Link>
       </div>

@@ -16,6 +16,7 @@ export default function CustomerAuthPortal() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -153,21 +154,30 @@ export default function CustomerAuthPortal() {
                     </button>
                   )}
                 </div>
-                <input
-                  type="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-3 border border-black rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-black text-black bg-white placeholder-zinc-600"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full p-3 pr-20 border border-black rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-black text-black bg-white placeholder-zinc-600"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold uppercase tracking-wide text-black hover:text-orange-500 transition-colors active:scale-95"
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
               </div>
             )}
           </div>
 
           <button
             type="submit"
-            className="w-full bg-white border border-black text-black font-semibold py-3 rounded-full text-xs uppercase tracking-widest hover:text-orange-500 hover:border-orange-500 transition-all shadow-sm"
+            className="w-full bg-white border border-black text-black font-semibold py-3 rounded-full text-xs uppercase tracking-widest hover:text-orange-500 hover:border-orange-500 transition-all shadow-sm active:scale-95 active:bg-zinc-100"
           >
             {isResetMode ? "Send Reset Instructions" : isSignUp ? "Sign Up" : "Sign In"}
           </button>

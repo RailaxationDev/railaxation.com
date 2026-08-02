@@ -82,7 +82,12 @@ export default function AdminDashboard() {
   // Password Change
   const [currentPasswordInput, setCurrentPasswordInput] = useState("");
   const [newPasswordInput, setNewPasswordInput] = useState("");
+  const [showAdminLoginPassword, setShowAdminLoginPassword] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const [adminPassword, setAdminPassword] = useState("Railaxation2026!");
+  const [passwordChangeMessage, setPasswordChangeMessage] = useState("");
+  const [passwordChangeError, setPasswordChangeError] = useState("");
 
   const [feedbackList, setFeedbackList] = useState<any[]>([]);
   const [ordersList, setOrdersList] = useState<any[]>([]);
@@ -144,18 +149,26 @@ export default function AdminDashboard() {
 
   const handlePasswordChange = (e: React.FormEvent) => {
     e.preventDefault();
+    setPasswordChangeError("");
+    setPasswordChangeMessage("");
+
     if (currentPasswordInput !== adminPassword) {
+      setPasswordChangeError("Current admin password is incorrect.");
       alert("Current admin password is incorrect.");
       return;
     }
+
     if (!newPasswordInput || newPasswordInput.length < 6) {
+      setPasswordChangeError("New password must be at least 6 characters long.");
       alert("New password must be at least 6 characters long.");
       return;
     }
+
     setAdminPassword(newPasswordInput);
     localStorage.setItem("railaxation_custom_admin_password", newPasswordInput);
     setCurrentPasswordInput("");
     setNewPasswordInput("");
+    setPasswordChangeMessage("Admin password changed successfully. The new password is now stored and will be used until it is changed again.");
     alert("Admin password updated successfully!");
   };
 
@@ -304,17 +317,26 @@ export default function AdminDashboard() {
             <span className="text-xs uppercase tracking-[0.2em] text-black font-bold">Secure Access</span>
             <h1 className="font-serif text-2xl text-black">Admin Portal</h1>
           </div>
-          <input
-            type="password"
-            placeholder="Enter Admin Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 border border-black rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-black text-black bg-white"
-            required
-          />
+          <div className="relative">
+            <input
+              type={showAdminLoginPassword ? "text" : "password"}
+              placeholder="Enter Admin Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 pr-20 border border-black rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-black text-black bg-white"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowAdminLoginPassword((prev) => !prev)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold uppercase tracking-wide text-black hover:text-orange-500 transition-colors active:scale-95"
+            >
+              {showAdminLoginPassword ? "Hide" : "Show"}
+            </button>
+          </div>
           <button
             type="submit"
-            className="w-full bg-white border border-black text-black font-semibold py-3 rounded-full text-xs uppercase tracking-widest hover:text-orange-500 hover:border-orange-500 transition-all shadow-sm"
+            className="w-full bg-white border border-black text-black font-semibold py-3 rounded-full text-xs uppercase tracking-widest hover:text-orange-500 hover:border-orange-500 transition-all shadow-sm active:scale-95 active:bg-zinc-100"
           >
             Access Dashboard
           </button>
@@ -324,25 +346,25 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FBFBFA] p-8 text-black font-sans">
+    <div className="min-h-screen bg-[#FBFBFA] p-4 sm:p-6 md:p-8 text-black font-sans">
       <div className="max-w-6xl mx-auto space-y-6">
         
         {/* HEADER */}
-        <div className="flex justify-between items-center border-b border-black pb-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center border-b border-black pb-4">
           <div>
             <span className="text-xs uppercase tracking-[0.2em] text-black font-bold">Railaxation Management</span>
-            <h1 className="font-serif text-3xl text-black">Admin Control Center</h1>
+            <h1 className="font-serif text-2xl sm:text-3xl text-black">Admin Control Center</h1>
           </div>
           <button
             onClick={() => setIsAuthenticated(false)}
-            className="text-xs text-black font-semibold uppercase tracking-wider bg-white border border-black px-4 py-2 rounded-full hover:text-orange-500 hover:border-orange-500 transition-colors"
+            className="text-xs text-black font-semibold uppercase tracking-wider bg-white border border-black px-4 py-2 rounded-full hover:text-orange-500 hover:border-orange-500 transition-colors whitespace-nowrap"
           >
             Logout
           </button>
         </div>
 
         {/* NAVIGATION TABS */}
-        <div className="flex gap-4 border-b border-black pb-2 text-xs uppercase tracking-wider font-semibold overflow-x-auto text-black">
+        <div className="flex gap-4 border-b border-black pb-2 text-[10px] sm:text-xs uppercase tracking-wider font-semibold overflow-x-auto text-black snap-x snap-mandatory">
           <button onClick={() => setActiveTab("inventory")} className={`pb-2 border-b-2 transition-colors whitespace-nowrap hover:text-orange-500 ${activeTab === "inventory" ? "border-black text-black font-bold" : "border-transparent text-black"}`}>
             Inventory & Price Control ({variants.length})
           </button>
@@ -393,7 +415,7 @@ export default function AdminDashboard() {
             </div>
 
             <div className="bg-white p-4 rounded-2xl border border-black shadow-sm text-black">
-              <div className="flex flex-col md:flex-row justify-between gap-3 items-center">
+              <div className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -406,13 +428,13 @@ export default function AdminDashboard() {
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => applyBulkStockAction(true)}
-                    className="px-3 py-2 rounded-full text-[10px] uppercase tracking-wider font-bold border border-black bg-black text-white"
+                    className="px-3 py-2 rounded-full text-[10px] uppercase tracking-wider font-bold border border-black bg-black text-white whitespace-nowrap"
                   >
                     Bulk Mark In Stock
                   </button>
                   <button
                     onClick={() => applyBulkStockAction(false)}
-                    className="px-3 py-2 rounded-full text-[10px] uppercase tracking-wider font-bold border border-black bg-white text-black"
+                    className="px-3 py-2 rounded-full text-[10px] uppercase tracking-wider font-bold border border-black bg-white text-black whitespace-nowrap"
                   >
                     Bulk Mark Out of Stock
                   </button>
@@ -420,8 +442,8 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-black overflow-hidden shadow-sm max-h-[600px] overflow-y-auto text-black">
-              <table className="w-full text-left text-sm">
+            <div className="bg-white rounded-2xl border border-black overflow-hidden shadow-sm max-h-[600px] overflow-y-auto overflow-x-auto text-black">
+              <table className="w-full min-w-[980px] text-left text-sm">
                 <thead className="bg-white border-b border-black text-black text-xs uppercase tracking-wider sticky top-0">
                   <tr>
                     <th className="p-4 font-bold text-black">Select</th>
@@ -444,14 +466,14 @@ export default function AdminDashboard() {
                           className="h-4 w-4"
                         />
                       </td>
-                      <td className="p-4 font-medium text-black">
+                      <td className="p-4 font-medium text-black align-top">
                         {item.name}
                         <span className="block text-[10px] text-black uppercase tracking-widest">{item.category}</span>
                       </td>
-                      <td className="p-4 text-black font-medium text-xs">
-                        <span className="bg-white border border-black px-2.5 py-1 rounded-md text-black">{item.scent}</span>
+                      <td className="p-4 text-black font-medium text-xs align-top">
+                        <span className="bg-white border border-black px-2.5 py-1 rounded-md text-black whitespace-nowrap">{item.scent}</span>
                       </td>
-                      <td className="p-4 text-black">
+                      <td className="p-4 text-black align-top">
                         <input
                           type="number"
                           step="0.50"
@@ -460,11 +482,11 @@ export default function AdminDashboard() {
                           className="w-24 p-1.5 border border-black rounded-lg text-xs font-semibold bg-white text-black"
                         />
                       </td>
-                      <td className="p-4 space-y-1">
-                        <div className="flex items-center gap-2">
+                      <td className="p-4 space-y-1 align-top">
+                        <div className="flex items-center gap-2 flex-wrap">
                           <button
                             onClick={() => toggleDiscount(item.uniqueId)}
-                            className={`px-3 py-1 rounded-md text-[10px] font-bold uppercase border border-black transition-all ${
+                            className={`px-3 py-1 rounded-md text-[10px] font-bold uppercase border border-black transition-all whitespace-nowrap ${
                               item.discounted ? "bg-black text-white" : "bg-white text-black hover:bg-zinc-100"
                             }`}
                           >
@@ -472,7 +494,7 @@ export default function AdminDashboard() {
                           </button>
                         </div>
                         {item.discounted && (
-                          <div className="flex items-center gap-1 mt-1">
+                          <div className="flex items-center gap-1 mt-1 flex-wrap">
                             <input
                               type="number"
                               value={item.discountPercent}
@@ -483,15 +505,15 @@ export default function AdminDashboard() {
                           </div>
                         )}
                       </td>
-                      <td className="p-4">
-                        <span className="text-xs px-3 py-1 rounded-full font-bold uppercase border border-black bg-white text-black">
+                      <td className="p-4 align-top">
+                        <span className="text-xs px-3 py-1 rounded-full font-bold uppercase border border-black bg-white text-black whitespace-nowrap">
                           {item.inStock ? "In Stock" : "Sold Out"}
                         </span>
                       </td>
-                      <td className="p-4 text-right">
+                      <td className="p-4 text-right align-top">
                         <button
                           onClick={() => toggleStock(item.uniqueId)}
-                          className="px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold bg-white border border-black text-black hover:text-orange-500 hover:border-orange-500 transition-all"
+                          className="px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold bg-white border border-black text-black hover:text-orange-500 hover:border-orange-500 transition-all whitespace-nowrap"
                         >
                           {item.inStock ? "Mark Out of Stock" : "Mark Available"}
                         </button>
@@ -617,15 +639,15 @@ export default function AdminDashboard() {
         {/* TAB 3: CODE REDEMPTIONS */}
         {activeTab === "redemptions" && (
           <div className="space-y-4 text-black">
-            <div className="bg-white p-6 rounded-2xl border border-black shadow-sm space-y-4">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl border border-black shadow-sm space-y-4">
               <h2 className="font-serif text-xl text-black">Customer Code Redemption Logs</h2>
               <p className="text-xs text-zinc-600">Tracks which customer email used which promo code. Once used, the code is locked and expires for that specific email address.</p>
               
               {redemptionHistory.length === 0 ? (
                 <div className="p-12 text-center rounded-xl border border-black text-xs text-black">No promo codes have been redeemed by customers yet.</div>
               ) : (
-                <div className="rounded-xl border border-black overflow-hidden">
-                  <table className="w-full text-left text-sm">
+                <div className="rounded-xl border border-black overflow-hidden overflow-x-auto">
+                  <table className="w-full min-w-[700px] text-left text-sm">
                     <thead className="bg-white border-b border-black text-black text-xs uppercase tracking-wider">
                       <tr>
                         <th className="p-4 font-bold">Customer Email</th>
@@ -686,16 +708,16 @@ export default function AdminDashboard() {
         {/* TAB 5: ORDERS */}
         {activeTab === "orders" && (
           <div className="space-y-4 text-black">
-            <div className="bg-white p-4 rounded-2xl border border-black shadow-sm flex flex-col md:flex-row justify-between gap-3 items-center">
-              <div className="flex gap-2">
-                <button onClick={() => setOrderStatusFilter("all")} className={`px-3 py-2 rounded-full text-[10px] font-bold uppercase ${orderStatusFilter === "all" ? "bg-black text-white" : "bg-white border border-black text-black"}`}>All</button>
-                <button onClick={() => setOrderStatusFilter("pending")} className={`px-3 py-2 rounded-full text-[10px] font-bold uppercase ${orderStatusFilter === "pending" ? "bg-black text-white" : "bg-white border border-black text-black"}`}>Pending / Processing</button>
-                <button onClick={() => setOrderStatusFilter("fulfilled")} className={`px-3 py-2 rounded-full text-[10px] font-bold uppercase ${orderStatusFilter === "fulfilled" ? "bg-black text-white" : "bg-white border border-black text-black"}`}>Fulfilled</button>
+            <div className="bg-white p-4 rounded-2xl border border-black shadow-sm flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
+              <div className="flex flex-wrap gap-2">
+                <button onClick={() => setOrderStatusFilter("all")} className={`px-3 py-2 rounded-full text-[10px] font-bold uppercase whitespace-nowrap ${orderStatusFilter === "all" ? "bg-black text-white" : "bg-white border border-black text-black"}`}>All</button>
+                <button onClick={() => setOrderStatusFilter("pending")} className={`px-3 py-2 rounded-full text-[10px] font-bold uppercase whitespace-nowrap ${orderStatusFilter === "pending" ? "bg-black text-white" : "bg-white border border-black text-black"}`}>Pending / Processing</button>
+                <button onClick={() => setOrderStatusFilter("fulfilled")} className={`px-3 py-2 rounded-full text-[10px] font-bold uppercase whitespace-nowrap ${orderStatusFilter === "fulfilled" ? "bg-black text-white" : "bg-white border border-black text-black"}`}>Fulfilled</button>
               </div>
 
               <button
                 onClick={clearAllOrders}
-                className="px-4 py-2 rounded-full text-[10px] font-bold uppercase border border-red-500 bg-white text-red-600"
+                className="px-4 py-2 rounded-full text-[10px] font-bold uppercase border border-red-500 bg-white text-red-600 whitespace-nowrap"
               >
                 Clear All Orders
               </button>
@@ -706,10 +728,10 @@ export default function AdminDashboard() {
             ) : (
               filteredOrders.map((order, idx) => (
                 <div key={order.orderId || idx} className="bg-white p-6 rounded-2xl border border-black shadow-sm space-y-3 text-xs text-black">
-                  <div className="flex justify-between items-center font-bold pb-2 border-b border-black gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center font-bold pb-2 border-b border-black">
                     <span>Order #{idx + 1}</span>
-                    <div className="flex items-center gap-2">
-                      <span className={`px-3 py-1 rounded-full text-[10px] uppercase font-bold ${
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className={`px-3 py-1 rounded-full text-[10px] uppercase font-bold whitespace-nowrap ${
                         (order.status || "Paid & Processing").toLowerCase().includes("fulfilled") || (order.status || "Paid & Processing").toLowerCase().includes("complete")
                           ? "bg-emerald-100 text-emerald-800 border border-emerald-400"
                           : "bg-amber-100 text-amber-800 border border-amber-400"
@@ -718,7 +740,7 @@ export default function AdminDashboard() {
                       </span>
                       <button
                         onClick={() => removeOrder(order.orderId)}
-                        className="px-3 py-1 rounded-full border border-red-500 text-red-600 font-bold uppercase text-[10px]"
+                        className="px-3 py-1 rounded-full border border-red-500 text-red-600 font-bold uppercase text-[10px] whitespace-nowrap"
                       >
                         Remove Order
                       </button>
@@ -804,28 +826,59 @@ export default function AdminDashboard() {
               <h2 className="font-serif text-2xl mb-1 text-black">Change Admin Password</h2>
               <p className="text-xs text-black">Update the secure master access passcode for the Railaxation control center.</p>
             </div>
+
+            {passwordChangeError && (
+              <div className="p-3 border border-red-500 bg-red-50 text-red-700 rounded-xl text-xs font-semibold">
+                {passwordChangeError}
+              </div>
+            )}
+
+            {passwordChangeMessage && (
+              <div className="p-3 border border-emerald-500 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-semibold">
+                {passwordChangeMessage}
+              </div>
+            )}
+
             <form onSubmit={handlePasswordChange} className="space-y-4 text-black">
               <div>
                 <label className="block text-xs uppercase tracking-wider text-black mb-1">Current Password</label>
-                <input
-                  type="password"
-                  value={currentPasswordInput}
-                  onChange={(e) => setCurrentPasswordInput(e.target.value)}
-                  className="w-full p-3 border border-black rounded-xl text-sm bg-white text-black"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={showCurrentPassword ? "text" : "password"}
+                    value={currentPasswordInput}
+                    onChange={(e) => setCurrentPasswordInput(e.target.value)}
+                    className="w-full p-3 pr-20 border border-black rounded-xl text-sm bg-white text-black"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowCurrentPassword((prev) => !prev)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold uppercase tracking-wide text-black hover:text-orange-500 transition-colors active:scale-95"
+                  >
+                    {showCurrentPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
               </div>
               <div>
                 <label className="block text-xs uppercase tracking-wider text-black mb-1">New Password</label>
-                <input
-                  type="password"
-                  value={newPasswordInput}
-                  onChange={(e) => setNewPasswordInput(e.target.value)}
-                  className="w-full p-3 border border-black rounded-xl text-sm bg-white text-black"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={showNewPassword ? "text" : "password"}
+                    value={newPasswordInput}
+                    onChange={(e) => setNewPasswordInput(e.target.value)}
+                    className="w-full p-3 pr-20 border border-black rounded-xl text-sm bg-white text-black"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowNewPassword((prev) => !prev)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold uppercase tracking-wide text-black hover:text-orange-500 transition-colors active:scale-95"
+                  >
+                    {showNewPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
               </div>
-              <button type="submit" className="w-full bg-white border border-black text-black font-semibold py-3 rounded-full text-xs uppercase tracking-widest hover:text-orange-500 hover:border-orange-500 transition-all">
+              <button type="submit" className="w-full bg-white border border-black text-black font-semibold py-3 rounded-full text-xs uppercase tracking-widest hover:text-orange-500 hover:border-orange-500 transition-all active:scale-95 active:bg-zinc-100">
                 Update Admin Password
               </button>
             </form>
