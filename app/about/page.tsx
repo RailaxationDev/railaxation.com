@@ -29,14 +29,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-[#FBFBFA] text-[#0B2B1B] font-sans">
       
       {/* BRAND NAVIGATION HEADER */}
-      <header className="w-full py-4 px-4 sm:px-6 lg:px-8 flex flex-col gap-3 border-b border-zinc-200 bg-white sm:flex-row sm:items-center sm:justify-between">
-        <nav className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-sm tracking-wide font-medium">
-          <Link href="/" className="hover:text-[#D4AF37] transition-colors">Home</Link>
-          <Link href="/shop" className="hover:text-[#D4AF37] transition-colors">Railaxation Shop</Link>
-          <span className="text-[#D4AF37] font-semibold">About & Support</span>
-        </nav>
-        <span className="font-serif text-base sm:text-lg tracking-[0.2em] font-bold whitespace-nowrap">RAILAXATION</span>
-      </header>
+    
 
       {/* CORE FRAMEWORK BANNER */}
       <main className="max-w-4xl mx-auto px-6 py-16">

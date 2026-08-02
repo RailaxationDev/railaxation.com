@@ -61,6 +61,7 @@ function HeaderNavbar() {
     { name: "Railaxation Shop", href: "/shop" },
     { name: "Track Order", href: "/track-order" },
     { name: "About / Contact", href: "/about" },
+    { name: "Cart", href: "/cart" }
   ];
 
   useEffect(() => {

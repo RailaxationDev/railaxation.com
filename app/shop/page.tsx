@@ -593,35 +593,7 @@ function ShopContent() {
     <div className="min-h-screen bg-[#FBFBFA] text-[#0B2B1B] font-sans relative">
       
       {/* BRAND NAVIGATION HEADER */}
-      <header className="w-full py-6 px-8 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-zinc-200 bg-white">
-        <nav className="flex gap-6 text-sm tracking-wide font-medium">
-          <Link href="/" className="hover:text-[#D4AF37] transition-colors">Home</Link>
-          <Link href="/shop" className="text-[#D4AF37] font-semibold">Railaxation Shop</Link>
-          <Link href="/about" className="hover:text-[#D4AF37] transition-colors">About / Contact</Link>
-          <Link href="/cart" className="hover:text-[#D4AF37] transition-colors font-semibold">View Basket</Link>
-        </nav>
-        
-        <span className="font-serif text-lg tracking-[0.2em] font-bold">RAILAXATION</span>
-
-        <form onSubmit={handleSearchSubmit} className="relative w-full md:w-64">
-          <input 
-            type="text" 
-            placeholder="Search Railaxation..." 
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-full px-4 py-2 text-[#0B2B1B] focus:outline-none focus:border-[#0B2B1B]"
-          />
-          {searchInput && (
-            <button 
-              type="button" 
-              onClick={() => { setSearchInput(""); router.push("/shop"); }} 
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 text-xs"
-            >
-              ✕
-            </button>
-          )}
-        </form>
-      </header>
+      
 
       {/* SHOP GRID CONTENT */}
       <main className="max-w-7xl mx-auto px-6 py-12">
