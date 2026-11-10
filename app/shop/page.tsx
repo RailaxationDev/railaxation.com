@@ -42,7 +42,7 @@ const PRODUCTS = [
       "Strawberry": true, "Lavender": true, "Eucalyptus": true, "Lime": true, "Lemongrass": true,
       "Sweet Orange": true, "Ylang Ylang": true, "Sandalwood": true, "Jasmine": true, "Grapefruit": true
     } as Record<ScentVariant, boolean>,
-    description: "A beautifully molded heart-shaped single soap bar, designed to enrich skin texture with a soothing calm.",
+    description: "A beautifully molded heart-shaped soap, designed to enrich skin texture with a soothing calm.",
     scents: RAILAXATION_SCENTS,
     scentImages: {
       "Strawberry": "/redheart.PNG", "Lavender": "/purpleheart.PNG", "Eucalyptus": "/blueheart.PNG",
@@ -214,7 +214,7 @@ const PRODUCTS = [
   { 
     id: 10, 
     name: "Railaxation 8oz Premium Candle Tin", 
-    price: 15.00, 
+    price: 10.00, 
     category: "candles", 
     img: "/greencandle.PNG", 
     inStock: true,
@@ -242,7 +242,7 @@ const PRODUCTS = [
       "Strawberry": true, "Lavender": true, "Eucalyptus": true, "Lime": true, "Lemongrass": true,
       "Sweet Orange": true, "Ylang Ylang": true, "Sandalwood": true, "Jasmine": true, "Grapefruit": true
     } as Record<ScentVariant, boolean>,
-    description: "A vibrant custom grooming box curated for young minds to enjoy a quiet, calming luxury bubble routine.",
+    description: "A vibrant custom grooming box curated for young minds to enjoy a quiet, calming luxury bubble routine. Equipped with, 1x Railaxation body soap, one of our Handsoap sets, a face cloth , 1x bath toy, 2x toothpick and flossers.",
     scents: RAILAXATION_SCENTS,
     scentImages: {
       "Strawberry": "/comingsoon.PNG", "Lavender": "/comingsoon.PNG", "Eucalyptus": "/comingsoon.PNG",
@@ -261,7 +261,7 @@ const PRODUCTS = [
       "Strawberry": true, "Lavender": true, "Eucalyptus": true, "Lime": true, "Lemongrass": true,
       "Sweet Orange": true, "Ylang Ylang": true, "Sandalwood": true, "Jasmine": true, "Grapefruit": true
     } as Record<ScentVariant, boolean>,
-    description: "A fun-filled self-care box designed specifically to make comfort time exciting and refreshing for boys.",
+    description: "A fun-filled self-care box designed specifically to make comfort time exciting and refreshing for boys. 1x Railaxation body soap, one of our Handsoap sets, a face cloth , 1x bath toy, 2x toothpick and flossers.",
     scents: RAILAXATION_SCENTS,
     scentImages: {
       "Strawberry": "/comingsoon.PNG", "Lavender": "/comingsoon.PNG", "Eucalyptus": "/comingsoon.PNG",
@@ -280,7 +280,7 @@ const PRODUCTS = [
       "Strawberry": true, "Lavender": true, "Eucalyptus": true, "Lime": true, "Lemongrass": true,
       "Sweet Orange": true, "Ylang Ylang": true, "Sandalwood": true, "Jasmine": true, "Grapefruit": true
     } as Record<ScentVariant, boolean>,
-    description: "A beautifully bundled sanctuary gift set packed with premium essentials to upgrade your wellness needs.",
+    description: "A beautifully bundled sanctuary gift set packed with 1x Railaxation body soap, 1 Railaxation 8oz candle, one of our Handsoap sets, a loofah, 1 set of wax melts, 1 Railaxation branded tweezers, premium essentialsto upgrade your wellness needs.",
     scents: RAILAXATION_SCENTS,
     scentImages: {
       "Strawberry": "/comingsoon.PNG", "Lavender": "/comingsoon.PNG", "Eucalyptus": "/comingsoon.PNG",
@@ -299,7 +299,7 @@ const PRODUCTS = [
       "Strawberry": true, "Lavender": true, "Eucalyptus": true, "Lime": true, "Lemongrass": true,
       "Sweet Orange": true, "Ylang Ylang": true, "Sandalwood": true, "Jasmine": true, "Grapefruit": true
     } as Record<ScentVariant, boolean>,
-    description: "A tailored grooming and relaxation box containing robust, deeply comforting self-care essentials.",
+    description: "A tailored grooming and relaxation box containing 1x Railaxation body soap, 1x Railaxation 8oz candle, one of our Handsoap sets, a face cloth , 1x set of wax melts, and an electric shaver, deeply comforting self-care essentials.",
     scents: RAILAXATION_SCENTS,
     scentImages: {
       "Strawberry": "/comingsoon.PNG", "Lavender": "/comingsoon.PNG", "Eucalyptus": "/comingsoon.PNG",
@@ -318,7 +318,7 @@ const PRODUCTS = [
       "Strawberry": true, "Lavender": true, "Eucalyptus": true, "Lime": true, "Lemongrass": true,
       "Sweet Orange": true, "Ylang Ylang": true, "Sandalwood": true, "Jasmine": true, "Grapefruit": true
     } as Record<ScentVariant, boolean>,
-    description: "Our ultra-luxury extended collection package, packed with extra items for the ultimate home spa ritual.",
+    description: "Our luxury extended package containing, 2x Railaxation body soap, 1 Railaxation 8oz candle, one of our Handsoap sets, a loofah, 1 set of wax melts, 2 Railaxation branded tweezers and exfoliating gloves, packed with extra items for the ultimate home spa ritual. ",
     scents: RAILAXATION_SCENTS,
     scentImages: {
       "Strawberry": "/comingsoon.PNG", "Lavender": "/comingsoon.PNG", "Eucalyptus": "/comingsoon.PNG",
@@ -337,7 +337,7 @@ const PRODUCTS = [
       "Strawberry": true, "Lavender": true, "Eucalyptus": true, "Lime": true, "Lemongrass": true,
       "Sweet Orange": true, "Ylang Ylang": true, "Sandalwood": true, "Jasmine": true, "Grapefruit": true
     } as Record<ScentVariant, boolean>,
-    description: "The peak collection tier for men. An extensive package of premium products for deep body care and focus.",
+    description: "The peak collection tier for men. 2x Railaxation body soap, 1 Railaxation 8oz candle, one of our Handsoap sets, a face cloth , 1x set of wax melts, an electric shaver, and 1 Railaxation branded nail clipper, deeply comforting self-care essentials.",
     scents: RAILAXATION_SCENTS,
     scentImages: {
       "Strawberry": "/comingsoon.PNG", "Lavender": "/comingsoon.PNG", "Eucalyptus": "/comingsoon.PNG",
@@ -355,14 +355,75 @@ function ShopContent() {
   const currentCategory = searchParams.get("category") || "all";
   const searchQuery = searchParams.get("search") || "";
 
-  const [productsList, setProductsList] = useState<ShopProduct[]>(() => {
-    return PRODUCTS as ShopProduct[];
-  });
-
   const [selectedProduct, setSelectedProduct] = useState<ShopProduct | null>(null);
   const [chosenScent, setChosenScent] = useState<ScentVariant>("Strawberry");
   const [quantity, setQuantity] = useState(1);
-  const [searchInput, setSearchInput] = useState(searchQuery);
+
+  const readInventory = (): ShopProduct[] => {
+    try {
+      const savedAdminVariants = localStorage.getItem("railaxation_admin_variants");
+
+      if (!savedAdminVariants) {
+        return PRODUCTS as ShopProduct[];
+      }
+
+      const parsedAdminVariants = JSON.parse(savedAdminVariants);
+      const variantList = Array.isArray(parsedAdminVariants) ? parsedAdminVariants : [];
+
+      const updated = PRODUCTS.map((prod) => {
+        const matchingVariants = variantList.filter((variant: AdminVariantRecord) => {
+          if (typeof variant.uniqueId === "string") {
+            return variant.uniqueId.startsWith(`${prod.id}-`);
+          }
+
+          return Number(variant.id) === Number(prod.id);
+        });
+
+        const stockPerScent = { ...prod.stockPerScent } as Record<ScentVariant, boolean>;
+        const variantPrices: Partial<Record<ScentVariant, number>> = {};
+        const variantDiscounts: Partial<Record<ScentVariant, { discounted: boolean; discountPercent: number }>> = {};
+
+        prod.scents.forEach((scent) => {
+          const variant = matchingVariants.find((item: AdminVariantRecord) => {
+            if (typeof item.uniqueId === "string") {
+              return item.uniqueId === `${prod.id}-${scent}`;
+            }
+
+            return item.scent === scent;
+          });
+
+          if (!variant) return;
+
+          const scentKey = scent as ScentVariant;
+          const isVariantInStock = variant.inStock !== false;
+          stockPerScent[scentKey] = isVariantInStock;
+
+          if (typeof variant.price === "number") {
+            variantPrices[scentKey] = Number(variant.price.toFixed(2));
+          }
+
+          variantDiscounts[scentKey] = {
+            discounted: Boolean(variant.discounted),
+            discountPercent: Math.max(0, Math.min(100, Number(variant.discountPercent || 0))),
+          };
+        });
+
+        return {
+          ...prod,
+          inStock: Object.values(stockPerScent).some((value) => value),
+          price: (matchingVariants[0]?.price ?? prod.price) as number,
+          stockPerScent,
+          variantPrices: Object.keys(variantPrices).length ? variantPrices : undefined,
+          variantDiscounts: Object.keys(variantDiscounts).length ? variantDiscounts : undefined,
+        } as ShopProduct;
+      });
+
+      return updated;
+    } catch (error) {
+      console.error("Inventory loading failed:", error);
+      return PRODUCTS as ShopProduct[];
+    }
+  };
 
   const getDisplayPrice = (product: ShopProduct, scent: ScentVariant) => {
     const variantPrice = product.variantPrices?.[scent] ?? product.price;
@@ -376,134 +437,52 @@ function ShopContent() {
     return Number((variantPrice * (1 - discountPercent / 100)).toFixed(2));
   };
 
-  const getVariantPriceLookup = (product: ShopProduct) => {
-    const prices: Partial<Record<ScentVariant, number>> = {};
-
-    product.scents.forEach((scent) => {
-      prices[scent as ScentVariant] = getDisplayPrice(product, scent as ScentVariant);
-    });
-
-    return prices;
-  };
-
- const loadInventory = () => {
-  try {
-    const savedAdminVariants = localStorage.getItem("railaxation_admin_variants");
-
-    if (!savedAdminVariants) {
-      setProductsList(PRODUCTS as ShopProduct[]);
-      return;
-    }
-
-    const parsedAdminVariants = JSON.parse(savedAdminVariants);
-    const variantList = Array.isArray(parsedAdminVariants) ? parsedAdminVariants : [];
-
-    const updated = PRODUCTS.map((prod) => {
-      const matchingVariants = variantList.filter((variant: AdminVariantRecord) => {
-        if (typeof variant.uniqueId === "string") {
-          return variant.uniqueId.startsWith(`${prod.id}-`);
-        }
-
-        return Number(variant.id) === Number(prod.id);
-      });
-
-      const stockPerScent = { ...prod.stockPerScent } as Record<ScentVariant, boolean>;
-      const variantPrices: Partial<Record<ScentVariant, number>> = {};
-      const variantDiscounts: Partial<Record<ScentVariant, { discounted: boolean; discountPercent: number }>> = {};
-
-      prod.scents.forEach((scent) => {
-        const variant = matchingVariants.find((item: AdminVariantRecord) => {
-          if (typeof item.uniqueId === "string") {
-            return item.uniqueId === `${prod.id}-${scent}`;
-          }
-
-          return item.scent === scent;
-        });
-
-        if (!variant) return;
-
-        const scentKey = scent as ScentVariant;
-        const isVariantInStock = variant.inStock !== false;
-        stockPerScent[scentKey] = isVariantInStock;
-
-        if (typeof variant.price === "number") {
-          variantPrices[scentKey] = Number(variant.price.toFixed(2));
-        }
-
-        variantDiscounts[scentKey] = {
-          discounted: Boolean(variant.discounted),
-          discountPercent: Math.max(0, Math.min(100, Number(variant.discountPercent || 0)))
-        };
-      });
-
-      return {
-        ...prod,
-        inStock: Object.values(stockPerScent).some((value) => value),
-        price: (matchingVariants[0]?.price ?? prod.price) as number,
-        stockPerScent,
-        variantPrices: Object.keys(variantPrices).length ? variantPrices : undefined,
-        variantDiscounts: Object.keys(variantDiscounts).length ? variantDiscounts : undefined,
-      } as ShopProduct;
-    });
-
-    setProductsList(updated);
-
-  } catch (error) {
-    console.error("Inventory loading failed:", error);
-    setProductsList(PRODUCTS as ShopProduct[]);
-  }
-};
+  const [productsList, setProductsList] = useState<ShopProduct[]>(() => readInventory());
 
   useEffect(() => {
-    loadInventory();
-
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === "railaxation_admin_variants") {
-        loadInventory();
+        setProductsList(readInventory());
       }
     };
 
     const handleFocus = () => {
-      loadInventory();
+      setProductsList(readInventory());
+    };
+
+    const handleInventoryUpdated = () => {
+      setProductsList(readInventory());
     };
 
     window.addEventListener("storage", handleStorageChange);
     window.addEventListener("focus", handleFocus);
-    window.addEventListener("railaxation_inventory_updated", loadInventory as EventListener);
+    window.addEventListener("railaxation_inventory_updated", handleInventoryUpdated as EventListener);
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
       window.removeEventListener("focus", handleFocus);
-      window.removeEventListener("railaxation_inventory_updated", loadInventory as EventListener);
+      window.removeEventListener("railaxation_inventory_updated", handleInventoryUpdated as EventListener);
     };
   }, []);
 
-  useEffect(() => {
-  if (!selectedProduct) return;
+  const selectedProductWithLiveData = selectedProduct
+    ? productsList.find((p) => p.id === selectedProduct.id) ?? selectedProduct
+    : null;
 
-  const currentLiveProduct = productsList.find(
-    (p) => p.id === selectedProduct.id
-  );
+  function isCompletelySoldOut(product: ShopProduct) {
+    if (product.inStock === false) return true;
 
-  if (currentLiveProduct) {
-    setSelectedProduct(currentLiveProduct);
+    const scentValues = product.stockPerScent ? Object.values(product.stockPerScent) : [];
+    if (scentValues.length === 0) return false;
+
+    return scentValues.every((value) => value === false);
   }
-}, [productsList]);
-
-  useEffect(() => {
-    setSearchInput(searchQuery);
-  }, [searchQuery]);
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchInput.trim()) {
-      router.push(`/shop?search=${encodeURIComponent(searchInput.trim())}`);
-    } else {
-      router.push("/shop");
-    }
-  };
 
   const filteredProducts = productsList.filter((product) => {
+    if (isCompletelySoldOut(product)) {
+      return false;
+    }
+
     const matchesCategory = currentCategory === "all" || product.category === currentCategory;
     if (!matchesCategory) return false;
 
@@ -545,71 +524,55 @@ function ShopContent() {
   const openModal = (product: ShopProduct) => {
     const liveProduct = productsList.find((p) => p.id === product.id) || product;
     setSelectedProduct(liveProduct);
-    
+
     const firstAvailableScent = liveProduct.scents.find((scent: string) => liveProduct.stockPerScent?.[scent as ScentVariant] !== false) || liveProduct.scents[0] || "Strawberry";
     setChosenScent(firstAvailableScent as ScentVariant);
     setQuantity(1);
   };
 
-  const isCompletelySoldOut = (product: ShopProduct) => {
-  if (product.inStock === false) return true;
-
-  if (product.stockPerScent) {
-    const available = Object.values(product.stockPerScent).some(
-      (value) => value === true
-    );
-
-    return !available;
-  }
-
-  return false;
-};
-
-  const isCurrentVariantSoldOut = selectedProduct 
-    ? selectedProduct.inStock === false || selectedProduct.stockPerScent?.[chosenScent as ScentVariant] === false 
+  const isCurrentVariantSoldOut = selectedProductWithLiveData
+    ? selectedProductWithLiveData.inStock === false || selectedProductWithLiveData.stockPerScent?.[chosenScent as ScentVariant] === false
     : false;
 
   const handleAddToBasket = () => {
-    if (!selectedProduct || isCurrentVariantSoldOut) return;
+    if (!selectedProductWithLiveData || isCurrentVariantSoldOut) return;
 
     addToCart({
-      id: selectedProduct.id,
-      name: selectedProduct.name,
-      price: getDisplayPrice(selectedProduct, chosenScent),
+      id: selectedProductWithLiveData.id,
+      name: selectedProductWithLiveData.name,
+      price: getDisplayPrice(selectedProductWithLiveData, chosenScent),
       img: displayImage,
       scent: chosenScent,
-      quantity: quantity
+      quantity: quantity,
     });
 
     setSelectedProduct(null);
     router.push("/cart");
   };
 
-  const displayImage = selectedProduct 
-    ? (selectedProduct.scentImages?.[chosenScent as ScentVariant] || selectedProduct.img || "/webim.PNG")
+  const displayImage = selectedProductWithLiveData
+    ? (selectedProductWithLiveData.scentImages?.[chosenScent as ScentVariant] || selectedProductWithLiveData.img || "/webim.PNG")
     : "/webim.PNG";
 
   return (
-    <div className="min-h-screen bg-[#FBFBFA] text-[#0B2B1B] font-sans relative">
-      
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#FBFBFA] text-[#0B2B1B] font-sans relative">
       {/* BRAND NAVIGATION HEADER */}
-      
 
       {/* SHOP GRID CONTENT */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="text-center mb-12">
-          <h1 className="font-serif text-4xl capitalize tracking-wide mb-2">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 py-8 sm:py-12">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="font-serif text-2xl sm:text-4xl capitalize tracking-wide mb-2 break-words">
             {searchQuery 
               ? `Results for "${searchQuery}"` 
               : currentCategory === "all" ? "Our Whole Collection" : currentCategory === "boxes" ? "Railaxation Boxes" : `Railaxation ${currentCategory}`}
           </h1>
-          <p className="text-zinc-500 text-sm font-light">
+          <p className="text-zinc-500 text-xs sm:text-sm font-light">
             Meticulously handcrafted 1-by-1 in Birmingham.
           </p>
         </div>
 
         {/* DESKTOP FILTER BAR TABS */}
-        <div className="flex justify-center gap-4 mb-12 border-b border-zinc-200 pb-4 text-sm tracking-wide">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-12 border-b border-zinc-200 pb-4 text-[10px] sm:text-sm tracking-wide">
           {[
             { tag: "all", label: "All Items" },
             { tag: "candles", label: "Railaxation Candles & Melts" },
@@ -619,7 +582,7 @@ function ShopContent() {
             <Link
               key={tab.tag}
               href={tab.tag === "all" ? "/shop" : `/shop?category=${tab.tag}`}
-              className={`px-4 py-2 transition-all ${
+              className={`px-3 py-2 sm:px-4 transition-all text-center ${
                 currentCategory === tab.tag && !searchQuery ? "border-b-2 border-[#0B2B1B] font-bold" : "text-zinc-400 hover:text-zinc-800"
               }`}
             >
@@ -672,12 +635,12 @@ function ShopContent() {
       </main>
 
       {/* QUICK VIEW POPUP BOX MODAL */}
-      {selectedProduct && (
+      {selectedProductWithLiveData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
           <div className="absolute inset-0" onClick={() => setSelectedProduct(null)}></div>
-          
+
           <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative z-10 flex flex-col md:flex-row shadow-2xl border border-zinc-100">
-            
+
             <button 
               onClick={() => setSelectedProduct(null)}
               className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-800 font-bold z-20 text-lg cursor-pointer"
@@ -688,7 +651,7 @@ function ShopContent() {
             <div className="relative w-full md:w-1/2 h-64 md:h-auto min-h-[320px] bg-zinc-50">
               <Image 
                 src={displayImage} 
-                alt={selectedProduct.name}
+                alt={selectedProductWithLiveData.name}
                 fill
                 className={`object-cover ${isCurrentVariantSoldOut ? "grayscale opacity-60" : ""}`}
               />
@@ -703,13 +666,13 @@ function ShopContent() {
 
             <div className="w-full md:w-1/2 p-6 flex flex-col">
               <span className="text-xs uppercase tracking-widest text-[#D4AF37] font-semibold mb-1">
-                {selectedProduct.category === "boxes" ? "Railaxation Boxes" : `Railaxation ${selectedProduct.category}`}
+                {selectedProductWithLiveData.category === "boxes" ? "Railaxation Boxes" : `Railaxation ${selectedProductWithLiveData.category}`}
               </span>
-              <h2 className="font-serif text-2xl mb-2">{selectedProduct.name}</h2>
-              <p className="text-zinc-500 text-xs font-light mb-4 leading-relaxed">{selectedProduct.description}</p>
-              
+              <h2 className="font-serif text-2xl mb-2">{selectedProductWithLiveData.name}</h2>
+              <p className="text-zinc-500 text-xs font-light mb-4 leading-relaxed">{selectedProductWithLiveData.description}</p>
+
               <div className="text-xl font-semibold mb-4 text-[#0B2B1B]">
-                £{(getDisplayPrice(selectedProduct, chosenScent) * quantity).toFixed(2)}
+                £{(getDisplayPrice(selectedProductWithLiveData, chosenScent) * quantity).toFixed(2)}
               </div>
 
               <div className="space-y-4 mb-6">
@@ -720,8 +683,8 @@ function ShopContent() {
                     onChange={(e) => setChosenScent(e.target.value as ScentVariant)}
                     className="w-full border border-zinc-200 bg-white rounded-md p-2 text-sm focus:outline-none focus:border-[#0B2B1B]"
                   >
-                    {selectedProduct.scents.map((scent: string) => {
-                      const isVariantOut = selectedProduct.inStock === false || selectedProduct.stockPerScent?.[scent as ScentVariant] === false;
+                    {selectedProductWithLiveData.scents.map((scent: string) => {
+                      const isVariantOut = selectedProductWithLiveData.inStock === false || selectedProductWithLiveData.stockPerScent?.[scent as ScentVariant] === false;
                       return (
                         <option key={scent} value={scent}>
                           {scent} {isVariantOut ? "(Sold Out)" : ""}

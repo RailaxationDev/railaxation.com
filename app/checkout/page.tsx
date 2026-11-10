@@ -21,6 +21,8 @@ interface PromoCode {
   percent?: number;
   category?: string;
   active: boolean;
+  startsAt?: string;
+  expiresAt?: string;
 }
 
 export default function CheckoutPage() {
@@ -84,6 +86,11 @@ export default function CheckoutPage() {
       }
     }
 
+    if (appliedPromo && !appliedPromo.active) {
+      alert("This promo code is no longer active.");
+      return;
+    }
+
     setIsProcessing(true);
 
     const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
@@ -106,6 +113,8 @@ export default function CheckoutPage() {
       promoType: appliedPromo ? appliedPromo.type : null,
       status: "Paid & Processing",
       date: new Date().toLocaleString(),
+      customerName: name,
+      customerEmail: email,
     };
 
     // Trigger Resend email API integration with full address and order details
@@ -140,6 +149,9 @@ export default function CheckoutPage() {
           code: appliedPromo.code,
           type: appliedPromo.type,
           date: new Date().toLocaleString(),
+          orderId,
+          customerName: name,
+          customerEmail: email,
         });
         localStorage.setItem("railaxation_code_history", JSON.stringify(history));
       }

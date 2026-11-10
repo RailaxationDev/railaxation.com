@@ -11,6 +11,32 @@ const RAILAXATION_SCENTS = [
 
 type ScentVariant = typeof RAILAXATION_SCENTS[number];
 
+type InventoryVariant = {
+  uniqueId?: string;
+  id?: number | string;
+  name?: string;
+  price?: number;
+  category?: string;
+  scent?: string;
+  inStock?: boolean;
+  discounted?: boolean;
+  discountPercent?: number;
+};
+
+const isInventoryVariant = (value: unknown): value is InventoryVariant => {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const candidate = value as Record<string, unknown>;
+  return (
+    typeof candidate.uniqueId === "string" ||
+    typeof candidate.id === "number" ||
+    typeof candidate.id === "string" ||
+    typeof candidate.scent === "string"
+  );
+};
+
 const INITIAL_PRODUCTS = [
   { 
     id: 1, 
@@ -212,17 +238,23 @@ export default function AdminProductsPage() {
     const saved = localStorage.getItem("railaxation_admin_variants");
     if (saved) {
       try {
-        const parsed = JSON.parse(saved);
+        const parsed = JSON.parse(saved) as unknown;
         return INITIAL_PRODUCTS.map((prod) => {
           const matchingVariants = Array.isArray(parsed)
-            ? parsed.filter((item: any) => item.uniqueId?.startsWith(`${prod.id}-`) || Number(item.id) === Number(prod.id))
+            ? parsed.filter(
+                (item): item is InventoryVariant =>
+                  isInventoryVariant(item) &&
+                  (typeof item.uniqueId === "string"
+                    ? item.uniqueId.startsWith(`${prod.id}-`)
+                    : Number(item.id) === Number(prod.id))
+              )
             : [];
 
           const stockPerScent = {
             ...prod.stockPerScent,
           } as Record<ScentVariant, boolean>;
 
-          matchingVariants.forEach((variant: any) => {
+          matchingVariants.forEach((variant) => {
             const scent = variant.scent as ScentVariant;
             if (scent && typeof variant.inStock === "boolean") {
               stockPerScent[scent] = variant.inStock;
@@ -235,7 +267,7 @@ export default function AdminProductsPage() {
             stockPerScent,
           };
         });
-      } catch (e) {
+      } catch {
         return INITIAL_PRODUCTS;
       }
     }
@@ -244,12 +276,17 @@ export default function AdminProductsPage() {
   
   const saveInventory = (updatedProducts: typeof products) => {
     const savedVariants = localStorage.getItem("railaxation_admin_variants");
-    const existingVariants = savedVariants ? JSON.parse(savedVariants) : [];
+    const existingVariants = savedVariants ? (JSON.parse(savedVariants) as unknown) : [];
 
     const inventoryUpdates = updatedProducts.flatMap((product) =>
       RAILAXATION_SCENTS.map((scent) => {
         const uniqueId = `${product.id}-${scent}`;
-        const existingVariant = existingVariants.find((variant: any) => variant.uniqueId === uniqueId);
+        const existingVariant = Array.isArray(existingVariants)
+          ? existingVariants.find(
+              (variant): variant is InventoryVariant =>
+                isInventoryVariant(variant) && variant.uniqueId === uniqueId
+            )
+          : undefined;
 
         return {
           ...existingVariant,
@@ -275,9 +312,19 @@ export default function AdminProductsPage() {
     const toggleMainStock = (id: number) => {
     const updated = products.map(p => {
       if (p.id === id) {
+        const nextStatus = !p.inStock;
+        const nextScents = RAILAXATION_SCENTS.reduce((acc, scent) => {
+          acc[scent] = nextStatus;
+          return acc;
+        }, {} as Record<ScentVariant, boolean>);
+
         return {
           ...p,
-          inStock: !p.inStock
+          inStock: nextStatus,
+          stockPerScent: {
+            ...p.stockPerScent,
+            ...nextScents,
+          }
         };
       }
       return p;
@@ -292,13 +339,15 @@ export default function AdminProductsPage() {
       if (p.id === productId) {
         const currentScents = p.stockPerScent || {};
         const currentStatus = currentScents[scentName] ?? true;
+        const nextScents = {
+          ...currentScents,
+          [scentName]: !currentStatus,
+        };
 
         return {
           ...p,
-          stockPerScent: {
-            ...currentScents,
-            [scentName]: !currentStatus
-          }
+          inStock: Object.values(nextScents).some(Boolean),
+          stockPerScent: nextScents,
         };
       }
 

@@ -61,12 +61,12 @@ export default function AdminDashboard() {
   
   // Promo codes state
   const [promoCodes, setPromoCodes] = useState<
-    { code: string; type: "percent" | "bogo"; category: string; specificItem?: string; percent: number; active: boolean }[]
+    { code: string; type: "percent" | "bogo"; category: string; specificItem?: string; percent: number; active: boolean; startsAt?: string; expiresAt?: string }[]
   >([]);
   
   // Code redemption history log state
   const [redemptionHistory, setRedemptionHistory] = useState<
-    { email: string; code: string; type: string; date: string }[]
+    { email: string; code: string; type: string; date: string; orderId?: string; customerName?: string; customerEmail?: string }[]
   >([]);
 
   const [newPromoCode, setNewPromoCode] = useState("");
@@ -74,6 +74,12 @@ export default function AdminDashboard() {
   const [newPromoCategory, setNewPromoCategory] = useState("candles");
   const [newPromoSpecificItem, setNewPromoSpecificItem] = useState("all");
   const [newPromoPercent, setNewPromoPercent] = useState(15);
+  const [newPromoStartsAt, setNewPromoStartsAt] = useState(() => new Date().toISOString().slice(0, 10));
+  const [newPromoExpiresAt, setNewPromoExpiresAt] = useState(() => {
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 30);
+    return expiry.toISOString().slice(0, 10);
+  });
 
   // Staff Invitation state
   const [inviteEmail, setInviteEmail] = useState("");
@@ -147,6 +153,19 @@ export default function AdminDashboard() {
     localStorage.setItem("railaxation_admin_variants", JSON.stringify(updated));
   };
 
+  const toggleProductStock = (variantUniqueId: string) => {
+    const productId = variantUniqueId.split("-")[0];
+    const matchingProductVariants = variants.filter((item) => item.uniqueId.startsWith(`${productId}-`));
+    const nextInStock = matchingProductVariants.some((item) => !item.inStock);
+
+    const updated = variants.map((item) =>
+      item.uniqueId.startsWith(`${productId}-`) ? { ...item, inStock: nextInStock } : item
+    );
+
+    setVariants(updated);
+    localStorage.setItem("railaxation_admin_variants", JSON.stringify(updated));
+  };
+
   const handlePasswordChange = (e: React.FormEvent) => {
     e.preventDefault();
     setPasswordChangeError("");
@@ -187,9 +206,42 @@ export default function AdminDashboard() {
     }
   };
 
+  const isPromoWithinDateWindow = (promo: { startsAt?: string; expiresAt?: string }) => {
+    const now = new Date();
+    const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    if (promo.startsAt) {
+      const startDate = new Date(`${promo.startsAt}T00:00:00`);
+      if (currentDate < startDate) return false;
+    }
+
+    if (promo.expiresAt) {
+      const endDate = new Date(`${promo.expiresAt}T23:59:59`);
+      if (currentDate > endDate) return false;
+    }
+
+    return true;
+  };
+
+  const getPromoStatusLabel = (promo: { active: boolean; startsAt?: string; expiresAt?: string }) => {
+    if (!promo.active) return "Inactive";
+    if (promo.expiresAt && !isPromoWithinDateWindow(promo)) return "Expired";
+    if (promo.startsAt) {
+      const today = new Date();
+      const startDate = new Date(`${promo.startsAt}T00:00:00`);
+      if (today < startDate) return "Scheduled";
+    }
+    return "Active";
+  };
+
   const handleAddPromoCode = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPromoCode) return;
+
+    if (newPromoExpiresAt && newPromoStartsAt && newPromoExpiresAt < newPromoStartsAt) {
+      alert("The expiry date must be after the active start date.");
+      return;
+    }
     
     const newEntry = {
       code: newPromoCode.toUpperCase(),
@@ -198,12 +250,20 @@ export default function AdminDashboard() {
       specificItem: newPromoSpecificItem !== "all" ? newPromoSpecificItem : undefined,
       percent: newPromoType === "percent" ? newPromoPercent : 100,
       active: true,
+      startsAt: newPromoStartsAt,
+      expiresAt: newPromoExpiresAt,
     };
 
     const updated = [...promoCodes, newEntry];
     setPromoCodes(updated);
     localStorage.setItem("railaxation_promos", JSON.stringify(updated));
     setNewPromoCode("");
+    setNewPromoStartsAt(new Date().toISOString().slice(0, 10));
+    setNewPromoExpiresAt(() => {
+      const expiry = new Date();
+      expiry.setDate(expiry.getDate() + 30);
+      return expiry.toISOString().slice(0, 10);
+    });
     alert("Promo code successfully created!");
   };
 
@@ -510,10 +570,18 @@ export default function AdminDashboard() {
                           {item.inStock ? "In Stock" : "Sold Out"}
                         </span>
                       </td>
-                      <td className="p-4 text-right align-top">
+                      <td className="p-4 text-right align-top space-y-2">
+                        <button
+                          onClick={() => toggleProductStock(item.uniqueId)}
+                          className="block w-full px-3 py-2 rounded-full text-[10px] uppercase tracking-wider font-bold bg-black text-white hover:opacity-90 transition-all whitespace-nowrap"
+                        >
+                          {variants.filter((variant) => variant.uniqueId.startsWith(`${item.uniqueId.split("-")[0]}-`)).every((variant) => variant.inStock)
+                            ? "Hide Product"
+                            : "Show Product"}
+                        </button>
                         <button
                           onClick={() => toggleStock(item.uniqueId)}
-                          className="px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold bg-white border border-black text-black hover:text-orange-500 hover:border-orange-500 transition-all whitespace-nowrap"
+                          className="block w-full px-3 py-2 rounded-full text-[10px] uppercase tracking-wider font-semibold bg-white border border-black text-black hover:text-orange-500 hover:border-orange-500 transition-all whitespace-nowrap"
                         >
                           {item.inStock ? "Mark Out of Stock" : "Mark Available"}
                         </button>
@@ -597,6 +665,30 @@ export default function AdminDashboard() {
                   </div>
                 )}
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs uppercase tracking-wider text-black mb-1">Active From</label>
+                    <input
+                      type="date"
+                      value={newPromoStartsAt}
+                      onChange={(e) => setNewPromoStartsAt(e.target.value)}
+                      className="w-full p-3 border border-black rounded-xl text-sm bg-white text-black"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs uppercase tracking-wider text-black mb-1">Expiry Date</label>
+                    <input
+                      type="date"
+                      value={newPromoExpiresAt}
+                      onChange={(e) => setNewPromoExpiresAt(e.target.value)}
+                      className="w-full p-3 border border-black rounded-xl text-sm bg-white text-black"
+                      required
+                    />
+                  </div>
+                </div>
+
                 <button type="submit" className="w-full bg-white border border-black text-black font-semibold py-3 rounded-full text-xs uppercase tracking-widest hover:text-orange-500 hover:border-orange-500 transition-all">
                   Save Promo Code
                 </button>
@@ -610,21 +702,28 @@ export default function AdminDashboard() {
               ) : (
                 <div className="space-y-2">
                   {promoCodes.map((p, idx) => (
-                    <div key={idx} className="flex justify-between items-center p-3 border border-black rounded-xl bg-white text-black">
-                      <div>
+                    <div key={idx} className="flex justify-between items-center p-3 border border-black rounded-xl bg-white text-black gap-3">
+                      <div className="min-w-0">
                         <span className="font-bold text-black">{p.code}</span>{" "}
                         {p.type === "bogo" ? (
                           <span className="bg-black text-white px-2 py-0.5 rounded text-[10px] uppercase font-bold ml-1">BOGO Free</span>
                         ) : (
                           <span>({p.percent}% off)</span>
                         )}{" "}
-                        <span className="text-xs text-zinc-600">
-                          [{p.category}{p.specificItem ? ` - ${p.specificItem}` : ""}]
+                        <span className="text-xs text-zinc-600 block">
+                          [{p.category}{p.specificItem ? ` - ${p.specificItem}` : ""}] · {p.startsAt || "No start date"} to {p.expiresAt || "No expiry"}
+                        </span>
+                        <span className={`text-[10px] uppercase tracking-wider font-bold ${
+                          getPromoStatusLabel(p) === "Expired" ? "text-red-600" :
+                          getPromoStatusLabel(p) === "Scheduled" ? "text-amber-600" :
+                          "text-emerald-600"
+                        }`}>
+                          {getPromoStatusLabel(p)}
                         </span>
                       </div>
                       <button
                         onClick={() => togglePromoActive(p.code)}
-                        className="px-3 py-1 rounded-full text-xs font-bold uppercase border border-black bg-white text-black hover:text-orange-500"
+                        className="px-3 py-1 rounded-full text-xs font-bold uppercase border border-black bg-white text-black hover:text-orange-500 whitespace-nowrap"
                       >
                         {p.active ? "Active (Disable)" : "Inactive (Enable)"}
                       </button>
@@ -653,6 +752,7 @@ export default function AdminDashboard() {
                         <th className="p-4 font-bold">Customer Email</th>
                         <th className="p-4 font-bold">Promo Code Used</th>
                         <th className="p-4 font-bold">Type</th>
+                        <th className="p-4 font-bold">Order ID</th>
                         <th className="p-4 font-bold text-right">Redemption Date</th>
                       </tr>
                     </thead>
@@ -662,6 +762,7 @@ export default function AdminDashboard() {
                           <td className="p-4 font-medium text-black">{log.email}</td>
                           <td className="p-4 font-bold text-black uppercase">{log.code}</td>
                           <td className="p-4 text-black uppercase">{log.type}</td>
+                          <td className="p-4 text-black uppercase">{log.orderId || "N/A"}</td>
                           <td className="p-4 text-right text-black">{log.date}</td>
                         </tr>
                       ))}

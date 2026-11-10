@@ -24,6 +24,8 @@ interface PromoCode {
   percent?: number;
   category?: string;
   active: boolean;
+  startsAt?: string;
+  expiresAt?: string;
 }
 
 export default function CartPage() {
@@ -35,10 +37,32 @@ export default function CartPage() {
   const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
   const [promoError, setPromoError] = useState("");
   const [activePromos, setActivePromos] = useState<PromoCode[]>([]);
+  const [expiredPromos, setExpiredPromos] = useState<PromoCode[]>([]);
+
+  const isPromoDateValid = (promo: PromoCode) => {
+    const today = new Date();
+    const currentDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    if (promo.startsAt) {
+      const startDate = new Date(`${promo.startsAt}T00:00:00`);
+      if (currentDay < startDate) return false;
+    }
+
+    if (promo.expiresAt) {
+      const endDate = new Date(`${promo.expiresAt}T23:59:59`);
+      if (currentDay > endDate) return false;
+    }
+
+    return true;
+  };
 
   useEffect(() => {
     const savedPromos: PromoCode[] = JSON.parse(localStorage.getItem("railaxation_promos") || "[]");
-    setActivePromos(savedPromos.filter(p => p.active));
+    const active = savedPromos.filter((p) => p.active && isPromoDateValid(p));
+    const expired = savedPromos.filter((p) => p.active && !isPromoDateValid(p));
+
+    setActivePromos(active);
+    setExpiredPromos(expired);
 
     const savedAppliedPromo = localStorage.getItem("railaxation_applied_promo");
     if (savedAppliedPromo) {
@@ -96,7 +120,7 @@ export default function CartPage() {
 
     const found = activePromos.find((p) => p.code === promoCodeInput.toUpperCase());
     if (!found) {
-      setPromoError("Invalid or inactive promo code.");
+      setPromoError("Invalid, expired, or inactive promo code.");
       return;
     }
 
@@ -146,6 +170,17 @@ export default function CartPage() {
                 </span>
               ))}
             </div>
+          </div>
+        )}
+
+        {expiredPromos.length > 0 && (
+          <div className="mb-8 bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl text-xs shadow-sm">
+            <span className="font-bold uppercase tracking-wider">Expired Codes:</span>
+            {expiredPromos.map((p, idx) => (
+              <span key={idx} className="ml-2">
+                {p.code} {p.type === "bogo" ? "(BOGO)" : `(${p.percent}% off)`}
+              </span>
+            ))}
           </div>
         )}
 

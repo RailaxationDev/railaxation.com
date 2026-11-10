@@ -54,10 +54,10 @@ export default function Home() {
           />
 
           {/* Foreground elements container inside the center */}
-          <div className="relative z-10 w-full max-w-2xl px-3 sm:px-4 flex flex-col items-center">
+          <div className="relative z-10 w-full max-w-2xl px-3 sm:px-4 flex flex-col items-center justify-center pt-[70px] sm:pt-[86px] md:pt-[96px]">
             
             {/* Search Bar Container */}
-            <form onSubmit={handleSearchSubmit} className="w-full max-w-xl flex flex-col sm:flex-row bg-white rounded-full overflow-hidden shadow-lg border border-zinc-200 mb-4 sm:mb-6">
+            <form onSubmit={handleSearchSubmit} className="w-full max-w-xl flex flex-col sm:flex-row bg-white rounded-full overflow-hidden shadow-lg border border-zinc-200 mb-5 sm:mb-7 mt-2 sm:mt-4">
               <input 
                 type="text" 
                 placeholder="Search our Railaxation creations..." 
