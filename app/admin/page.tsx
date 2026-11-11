@@ -273,6 +273,12 @@ export default function AdminDashboard() {
     localStorage.setItem("railaxation_promos", JSON.stringify(updated));
   };
 
+  const deletePromoCode = (codeStr: string) => {
+    const updated = promoCodes.filter((p) => p.code !== codeStr);
+    setPromoCodes(updated);
+    localStorage.setItem("railaxation_promos", JSON.stringify(updated));
+  };
+
   const filteredVariants = variants.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(searchFilter.toLowerCase());
     const matchesScent = scentFilter === "all" || item.scent === scentFilter;
@@ -721,12 +727,20 @@ export default function AdminDashboard() {
                           {getPromoStatusLabel(p)}
                         </span>
                       </div>
-                      <button
-                        onClick={() => togglePromoActive(p.code)}
-                        className="px-3 py-1 rounded-full text-xs font-bold uppercase border border-black bg-white text-black hover:text-orange-500 whitespace-nowrap"
-                      >
-                        {p.active ? "Active (Disable)" : "Inactive (Enable)"}
-                      </button>
+                      <div className="flex items-center gap-2 whitespace-nowrap">
+                        <button
+                          onClick={() => togglePromoActive(p.code)}
+                          className="px-3 py-1 rounded-full text-xs font-bold uppercase border border-black bg-white text-black hover:text-orange-500"
+                        >
+                          {p.active ? "Active (Disable)" : "Inactive (Enable)"}
+                        </button>
+                        <button
+                          onClick={() => deletePromoCode(p.code)}
+                          className="px-3 py-1 rounded-full text-xs font-bold uppercase border border-red-500 bg-white text-red-600 hover:text-red-700"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
